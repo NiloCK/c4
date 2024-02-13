@@ -37,7 +37,8 @@ func main() {
 			os.Exit(1)
 		}
 	} else {
-		// [ ] start broadcasting for peers
-
+		go network.Broadcast()
+		network.Listen()
+		// network.LookupBroadcastAddr()
 	}
 }
