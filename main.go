@@ -14,7 +14,7 @@ func initModel() c4.GameState {
 	return c4.NewGameState()
 }
 
-var serve = flag.Bool("serve", false, "host a mnetworked multiplayer game")
+var serve = flag.Bool("serve", false, "host a networked multiplayer game")
 var join = flag.String("join", "", "join a networked game hosted at supplied address")
 
 func init() {
