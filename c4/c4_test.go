@@ -11,13 +11,13 @@ func TestYellowVerticleWin(t *testing.T) {
 
 	g := NewGame()
 
-	for i := 0; i<8; i++ {
-		g = g.Move(i%2)
-		g.board.Print()
-		log.Printf("Winner: %s", g.winner)
+	for i := 0; i < 8; i++ {
+		g = g.Move(i % 2)
+		g.Board.Print()
+		log.Printf("Winner: %s", g.Winner)
 	}
 
-	if g.winner != Yellow {
+	if g.Winner != Yellow {
 		t.Errorf("Expected yellow to win")
 	}
 }
@@ -27,21 +27,21 @@ func TestRedVerticleWin(t *testing.T) {
 
 	g := NewGame()
 
-	for i := 0; i<8; i++ {
+	for i := 0; i < 8; i++ {
 		if g.CurrentMover() == Yellow {
-			g = g.Move(i % len(g.board.columns))
+			g = g.Move(i % len(g.Board.Columns))
 		} else {
 			g = g.Move(1)
 		}
-		g.board.Print()
+		g.Board.Print()
 	}
 
-	if g.winner != Red {
+	if g.Winner != Red {
 		t.Errorf("Expected red to win")
 	}
 }
 
-func TestCurrentMover(t *testing.T){
+func TestCurrentMover(t *testing.T) {
 	g := NewGame()
 
 	lastMover := g.CurrentMover()
@@ -50,13 +50,13 @@ func TestCurrentMover(t *testing.T){
 		t.Errorf("expected first-turn Yellow")
 	}
 
-	for i:=0; i<6; i++ {
+	for i := 0; i < 6; i++ {
 		g = g.Move(0)
 		if g.CurrentMover() == lastMover {
 			t.Errorf("expected the mover to alternate. lastMove: %s, currentMove: %s",
-			 lastMover, g.CurrentMover())
+				lastMover, g.CurrentMover())
 		}
 		lastMover = g.CurrentMover()
 	}
-	
+
 }

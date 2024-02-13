@@ -10,9 +10,9 @@ import (
 type Piece string
 
 const (
-    Red = "red"
-    Yellow = "yellow"
-	None = "none"
+	Red    = "red"
+	Yellow = "yellow"
+	None   = "none"
 )
 
 var RedStr = lipgloss.NewStyle().SetString("⊚").Foreground(
@@ -20,9 +20,8 @@ var RedStr = lipgloss.NewStyle().SetString("⊚").Foreground(
 var YelStr = lipgloss.NewStyle().SetString("❉").Foreground(
 	lipgloss.Color("#efff00")).String()
 
-
 type Board struct {
-	columns [7][6]Piece
+	Columns [7][6]Piece
 }
 
 func (b Board) Add(p Piece, column int) (Board, error) {
@@ -30,13 +29,13 @@ func (b Board) Add(p Piece, column int) (Board, error) {
 		return b, fmt.Errorf("added pieces must be Red or Yellow")
 	}
 
-	for i := range b.columns[column] {
-		if b.columns[column][i] == None {
-			b.columns[column][i] = p
+	for i := range b.Columns[column] {
+		if b.Columns[column][i] == None {
+			b.Columns[column][i] = p
 			return b, nil
 		}
 	}
-	
+
 	return b, fmt.Errorf("column %d is full", column)
 }
 
@@ -44,11 +43,11 @@ func (b Board) Print() string {
 	s := strings.Builder{}
 	s.WriteString("===============\n")
 
-	for i:=len(b.columns[0]) - 1; i>=0; i-- {
+	for i := len(b.Columns[0]) - 1; i >= 0; i-- {
 		s.WriteRune('|')
-		for j := 0; j<len(b.columns); j++ {
+		for j := 0; j < len(b.Columns); j++ {
 			// str := ""
-			color := b.columns[j][i]
+			color := b.Columns[j][i]
 			switch color {
 			case Red:
 				// str := lipgloss.NewStyle().SetString("  ").Background(lipgloss.Color("#fefe00"))
@@ -70,22 +69,21 @@ func (b Board) Print() string {
 	}
 
 	s.WriteString("===============\n")
-	
+
 	// fmt.Println(s.String())
 	return s.String()
 }
 
 func NewBoard() Board {
 	b := Board{
-		columns: [7][6]Piece{
-			{},{},{},{},{},{},{},
+		Columns: [7][6]Piece{
+			{}, {}, {}, {}, {}, {}, {},
 		},
 	}
-	for c, col := range b.columns {
+	for c, col := range b.Columns {
 		for r := range col {
-			b.columns[c][r] = None
+			b.Columns[c][r] = None
 		}
 	}
 	return b
 }
- 
