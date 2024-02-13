@@ -16,6 +16,7 @@ func initModel() c4.GameState {
 
 var serve = flag.Bool("serve", false, "host a networked multiplayer game")
 var join = flag.String("join", "", "join a networked game hosted at supplied address")
+var local = flag.Bool("local", false, "play a game with two players on this machine")
 
 func init() {
 	flag.Parse()
@@ -27,16 +28,16 @@ func main() {
 	if *serve {
 		// todo
 		network.InitServer()
-	}
-
-	if *join != "" {
+	} else if *join != "" {
 		network.InitClient(*join)
-	}
+	} else if *local {
+		// start a local game
+		if err := game.Start(); err != nil {
+			fmt.Printf("error starting game: %v", err)
+			os.Exit(1)
+		}
+	} else {
+		// [ ] start broadcasting for peers
 
-	// game := tea.NewProgram(initModel())
-
-	if err := game.Start(); err != nil {
-		fmt.Printf("error starting game: %v", err)
-		os.Exit(1)
 	}
 }
